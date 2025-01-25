@@ -1,30 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { db } from '../firebaseConfig';  // Importa tu configuración de Firebase
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';  // Importar useNavigate
 
 function VerVehiculos() {
-  const navigate = useNavigate();
-
-  // Estado para almacenar los vehículos
   const [vehiculos, setVehiculos] = useState([]);
-  
-  // Estado para almacenar los valores del formulario
   const [nuevoVehiculo, setNuevoVehiculo] = useState({
     marca: '',
     modelo: '',
     patente: '',
+    fechaMantenimiento: '', // Nuevo campo para la fecha de mantenimiento
   });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();  // Crear instancia de navigate
 
-  // Simulación de datos iniciales (puedes sustituir esto con datos de tu backend)
+  // Cargar vehículos de Firebase
   useEffect(() => {
-    const vehiculosIniciales = [
-      { marca: 'Toyota', modelo: 'Hilux', patente: 'ABC123' },
-      { marca: 'Ford', modelo: 'Ranger', patente: 'XYZ789' },
-      { marca: 'Nissan', modelo: 'Navara', patente: 'DEF456' },
-    ];
-    setVehiculos(vehiculosIniciales);
+    const fetchVehiculos = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'vehiculos'));
+        const vehiculosList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setVehiculos(vehiculosList);
+      } catch (err) {
+        setError('Error al cargar los vehículos.');
+        console.error(err);
+      }
+    };
+    fetchVehiculos();
   }, []);
 
-  // Función para manejar los cambios en los campos del formulario
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNuevoVehiculo({
@@ -33,33 +37,51 @@ function VerVehiculos() {
     });
   };
 
-  // Función para manejar el envío del formulario y agregar un vehículo
-  const handleAddVehiculo = (e) => {
+  const handleAddVehiculo = async (e) => {
     e.preventDefault();
 
-    // Verificamos si todos los campos están completos
-    if (nuevoVehiculo.marca && nuevoVehiculo.modelo && nuevoVehiculo.patente) {
-      setVehiculos([...vehiculos, nuevoVehiculo]); // Agregamos el nuevo vehículo a la lista
-      setNuevoVehiculo({ marca: '', modelo: '', patente: '' }); // Limpiamos el formulario
-    } else {
+    if (!nuevoVehiculo.marca || !nuevoVehiculo.modelo || !nuevoVehiculo.patente || !nuevoVehiculo.fechaMantenimiento) {
       alert('Por favor, complete todos los campos.');
+      return;
+    }
+
+    try {
+      const vehiculoRef = collection(db, 'vehiculos');
+      const docRef = await addDoc(vehiculoRef, nuevoVehiculo);
+
+      setVehiculos([
+        ...vehiculos,
+        { id: docRef.id, ...nuevoVehiculo },
+      ]);
+      setNuevoVehiculo({ marca: '', modelo: '', patente: '', fechaMantenimiento: '' });
+    } catch (err) {
+      setError('Error al agregar el vehículo.');
+      console.error(err);
     }
   };
 
-  // Función para eliminar un vehículo
-  const handleDeleteVehiculo = (index) => {
-    const vehiculosRestantes = vehiculos.filter((_, i) => i !== index);
-    setVehiculos(vehiculosRestantes); // Actualizamos la lista eliminando el vehículo seleccionado
+  const handleDeleteVehiculo = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'vehiculos', id));
+      setVehiculos(vehiculos.filter((vehiculo) => vehiculo.id !== id));
+    } catch (err) {
+      setError('Error al eliminar el vehículo.');
+      console.error(err);
+    }
+  };
+
+  const handleBack = () => {
+    navigate('/'); // Cambiar la ruta de acuerdo a donde desees redirigir
   };
 
   return (
-    <div>
+    <div className="asignar-chofer-container">
       <h1>Ver Vehículos</h1>
-      
-      {/* Formulario para agregar un vehículo */}
+      {error && <p className="error-message">{error}</p>}
+
       <h2>Agregar Nuevo Vehículo</h2>
-      <form onSubmit={handleAddVehiculo}>
-        <div>
+      <form onSubmit={handleAddVehiculo} className="form-container">
+        <div className="form-group">
           <label>Marca:</label>
           <input
             type="text"
@@ -67,9 +89,10 @@ function VerVehiculos() {
             value={nuevoVehiculo.marca}
             onChange={handleInputChange}
             placeholder="Ej: Toyota"
+            className="input-field"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Modelo:</label>
           <input
             type="text"
@@ -77,9 +100,10 @@ function VerVehiculos() {
             value={nuevoVehiculo.modelo}
             onChange={handleInputChange}
             placeholder="Ej: Hilux"
+            className="input-field"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Patente:</label>
           <input
             type="text"
@@ -87,42 +111,56 @@ function VerVehiculos() {
             value={nuevoVehiculo.patente}
             onChange={handleInputChange}
             placeholder="Ej: ABC123"
+            className="input-field"
           />
         </div>
-        <button type="submit">Agregar Vehículo</button>
+        <div className="form-group">
+          <label>Fecha de Mantenimiento:</label>
+          <input
+            type="date"
+            name="fechaMantenimiento"
+            value={nuevoVehiculo.fechaMantenimiento}
+            onChange={handleInputChange}
+            className="input-field"
+          />
+        </div>
+        <button type="submit" className="button">Agregar Vehículo</button>
       </form>
 
-      {/* Lista de vehículos */}
-      {vehiculos.length > 0 ? (
-        <table border="1" style={{ width: '100%', textAlign: 'left' }}>
-          <thead>
-            <tr>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>Patente</th>
-              <th>Acciones</th>
+      <h2>Vehículos Registrados</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Patente</th>
+            <th>Fecha de Mantenimiento</th> {/* Nueva columna */}
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vehiculos.map((vehiculo) => (
+            <tr key={vehiculo.id}>
+              <td>{vehiculo.marca}</td>
+              <td>{vehiculo.modelo}</td>
+              <td>{vehiculo.patente}</td>
+              <td>{vehiculo.fechaMantenimiento}</td> {/* Mostrar la fecha de mantenimiento */}
+              <td>
+                <button
+                  onClick={() => handleDeleteVehiculo(vehiculo.id)}
+                  className="button-eliminar"
+                >
+                  Eliminar
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {vehiculos.map((vehiculo, index) => (
-              <tr key={index}>
-                <td>{vehiculo.marca}</td>
-                <td>{vehiculo.modelo}</td>
-                <td>{vehiculo.patente}</td>
-                <td>
-                  {/* Botón de eliminación */}
-                  <button onClick={() => handleDeleteVehiculo(index)}>Eliminar</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No hay vehículos registrados.</p>
-      )}
+          ))}
+        </tbody>
+      </table>
 
-      {/* Botón para regresar */}
-      <button onClick={() => navigate(-1)}>Volver</button>
+      <button onClick={handleBack} className="button-volver">
+        Volver
+      </button>
     </div>
   );
 }

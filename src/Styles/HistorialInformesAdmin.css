@@ -1,0 +1,91 @@
+/* Estilos para el contenedor principal */
+.historial-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  /* Estilo para el título */
+  .titulo {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Estilo para los mensajes de error */
+  .error-message {
+    color: red;
+    text-align: center;
+  }
+  
+  /* Estilo para la tabla */
+  .informes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .informes-table th, .informes-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .informes-table th {
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  .informes-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Botón de "Ver Detalles" */
+  .toggle-details-btn {
+    padding: 5px 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  /* Botón de "Eliminar" */
+  .delete-btn {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Estilo para los botones "Volver" y "Exportar" */
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .volver-btn, .export-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .volver-btn {
+    background-color: #000000;
+    color: white;
+  }
+  
+  .export-btn {
+    background-color: #000000;
+    color: white;
+  }
+
+  .volver-btn:hover, .export-btn:hover {
+    opacity: 0.8;
+  }
+  

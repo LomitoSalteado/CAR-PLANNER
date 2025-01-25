@@ -1,0 +1,68 @@
+/* Estilos generales para el contenedor */
+.vehiculos-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+.vehiculos-container h1 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos de la tabla */
+.vehiculos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.vehiculos-table th, .vehiculos-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.vehiculos-table th {
+    background-color: #040504; /* Color verde */
+    color: white;
+}
+
+.vehiculos-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Filas alternas con fondo gris claro */
+}
+
+.vehiculos-table tbody tr:hover {
+    background-color: #ddd; /* Resaltado cuando el cursor pasa sobre una fila */
+}
+
+/* Botón Volver */
+.back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.back-button {
+    background-color: #000000; /* Rojo */
+    color: rgb(248, 248, 248);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 200px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #000000; /* Rojo más claro al pasar el cursor */
+}

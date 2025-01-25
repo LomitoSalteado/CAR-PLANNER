@@ -1,0 +1,108 @@
+/* Estilo del contenedor principal */
+.ver-vehiculos-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    background-color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo de los encabezados */
+.ver-vehiculos-container h1 {
+    margin-bottom: 20px;
+}
+
+.ver-vehiculos-container h2 {
+    margin-top: 20px;
+}
+
+/* Estilo del formulario */
+.form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Estilo de los inputs */
+.input-field {
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo de los botones */
+.button {
+    background-color: #000000;
+    color: rgb(0, 0, 0);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background-color: #000000;
+}
+
+/* Estilo de la tabla */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f4f4f4;
+}
+
+.table td {
+    text-align: center;
+}
+
+/* Estilo de los botones de eliminar */
+.button-eliminar {
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.button-eliminar:hover {
+    background-color: #000000;
+}
+
+/* Estilo del botón volver */
+.button-volver {
+    background-color: #000000;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 20px;
+}
+
+/* Estilo de los mensajes de error */
+.error-message {
+    color: red;
+    font-size: 16px;
+}

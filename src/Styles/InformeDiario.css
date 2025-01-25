@@ -1,0 +1,70 @@
+/* Fondo general */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eaeaea; /* Gris claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor principal */
+#informe-diario {
+    background-color: #eaeaea; /* Mismo color que el fondo */
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Títulos */
+#informe-diario h1 {
+    font-size: 32px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+/* Inputs y textareas */
+#informe-diario .form-control {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 15px;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Botones */
+#informe-diario .btn {
+    background-color: #111010; /* Negro */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+#informe-diario .btn:hover {
+    background-color: #000000; /* Negro más claro */
+    transform: translateY(-2px); /* Animación sutil */
+}
+
+/* Estilo para el botón "Volver" */
+#informe-diario .btn-volver {
+    background-color: #000000; /* Rojo */
+}
+
+#informe-diario .btn-volver:hover {
+    background-color: #000000; /* Rojo más claro */
+}
