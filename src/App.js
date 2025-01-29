@@ -15,7 +15,7 @@ import InformeDiario from "./pages/InformeDiario";
 import DashboardChofer from './pages/DashboardChofer';
 import InformacionPersonal from './pages/InformacionPersonal';
 
-// Importa useMediaQuery de react-responsive
+// Importar el Hook de Media Queries
 import { useMediaQuery } from 'react-responsive';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
 
-  // Detecta los tamaños de pantalla con react-responsive
+  // Detectar tamaños de pantalla
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const isTablet = useMediaQuery({ query: '(min-width: 769px) and (max-width: 1024px)' });
 
@@ -31,19 +31,17 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
-
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
           if (userDoc.exists()) {
-            const fetchedRole = userDoc.data().role;
-            setUserRole(fetchedRole);  // Set the user role
+            setUserRole(userDoc.data().role);
           }
         } catch (error) {
           console.error('Error al obtener el rol del usuario:', error);
         }
       } else {
         setUser(null);
-        setUserRole(null);  // Limpiar rol cuando no hay usuario
+        setUserRole(null);
       }
       setLoading(false);
     });
@@ -51,12 +49,10 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  // Si estamos cargando, mostramos un mensaje
   if (loading) {
     return <p>Cargando...</p>;
   }
 
-  // Si no hay usuario autenticado, redirigir a login
   if (!user) {
     return (
       <Routes>
@@ -67,37 +63,30 @@ function App() {
     );
   }
 
-  // Si el usuario está autenticado, mostramos las rutas correspondientes
   return (
-    <div>
-      {/* Puedes agregar clases condicionales según el tamaño de la pantalla */}
-      <div className={`container ${isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop'}`}>
-        <Routes>
-          {/* Rutas específicas para administradores */}
-          {userRole === 'administrador' && (
-            <>
-              <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
-              <Route path="/informacion-personal" element={<InformacionPersonal />} />
-              <Route path="/asignar-chofer" element={<AsignarChofer />} />
-              <Route path="/ver-vehiculos" element={<VerVehiculos />} />
-              <Route path="/historial-informes" element={<HistorialInformesAdmin />} />
-            </>
-          )}
+    <div className="container">
+      <Routes>
+        {userRole === 'administrador' && (
+          <>
+            <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
+            <Route path="/informacion-personal" element={<InformacionPersonal />} />
+            <Route path="/asignar-chofer" element={<AsignarChofer />} />
+            <Route path="/ver-vehiculos" element={<VerVehiculos />} />
+            <Route path="/historial-informes" element={<HistorialInformesAdmin />} />
+          </>
+        )}
 
-          {/* Rutas específicas para choferes */}
-          {userRole === 'chofer' && (
-            <>
-              <Route path="/dashboard-chofer" element={<DashboardChofer />} />
-              <Route path="/informacion-personal" element={<InformacionPersonal />} />
-              <Route path="/vehiculos-asignados" element={<VehiculosAsignados />} />
-              <Route path="/informe-diario" element={<InformeDiario />} />
-            </>
-          )}
+        {userRole === 'chofer' && (
+          <>
+            <Route path="/dashboard-chofer" element={<DashboardChofer />} />
+            <Route path="/informacion-personal" element={<InformacionPersonal />} />
+            <Route path="/vehiculos-asignados" element={<VehiculosAsignados />} />
+            <Route path="/informe-diario" element={<InformeDiario />} />
+          </>
+        )}
 
-          {/* Redirección por defecto, que lleva directamente al dashboard de acuerdo al rol */}
-          <Route path="*" element={userRole === 'administrador' ? <Navigate to="/dashboard" /> : <Navigate to="/dashboard-chofer" />} />
-        </Routes>
-      </div>
+        <Route path="*" element={userRole === 'administrador' ? <Navigate to="/dashboard" /> : <Navigate to="/dashboard-chofer" />} />
+      </Routes>
     </div>
   );
 }
