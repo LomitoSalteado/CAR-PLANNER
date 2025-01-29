@@ -15,10 +15,17 @@ import InformeDiario from "./pages/InformeDiario";
 import DashboardChofer from './pages/DashboardChofer';
 import InformacionPersonal from './pages/InformacionPersonal';
 
+// Importa useMediaQuery de react-responsive
+import { useMediaQuery } from 'react-responsive';
+
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
+
+  // Detecta los tamaños de pantalla con react-responsive
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const isTablet = useMediaQuery({ query: '(min-width: 769px) and (max-width: 1024px)' });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -62,31 +69,36 @@ function App() {
 
   // Si el usuario está autenticado, mostramos las rutas correspondientes
   return (
-    <Routes>
-      {/* Rutas específicas para administradores */}
-      {userRole === 'administrador' && (
-        <>
-          <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
-          <Route path="/informacion-personal" element={<InformacionPersonal />} />
-          <Route path="/asignar-chofer" element={<AsignarChofer />} />
-          <Route path="/ver-vehiculos" element={<VerVehiculos />} />
-          <Route path="/historial-informes" element={<HistorialInformesAdmin />} />
-        </>
-      )}
+    <div>
+      {/* Puedes agregar clases condicionales según el tamaño de la pantalla */}
+      <div className={`container ${isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop'}`}>
+        <Routes>
+          {/* Rutas específicas para administradores */}
+          {userRole === 'administrador' && (
+            <>
+              <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
+              <Route path="/informacion-personal" element={<InformacionPersonal />} />
+              <Route path="/asignar-chofer" element={<AsignarChofer />} />
+              <Route path="/ver-vehiculos" element={<VerVehiculos />} />
+              <Route path="/historial-informes" element={<HistorialInformesAdmin />} />
+            </>
+          )}
 
-      {/* Rutas específicas para choferes */}
-      {userRole === 'chofer' && (
-        <>
-          <Route path="/dashboard-chofer" element={<DashboardChofer />} />
-          <Route path="/informacion-personal" element={<InformacionPersonal />} />
-          <Route path="/vehiculos-asignados" element={<VehiculosAsignados />} />
-          <Route path="/informe-diario" element={<InformeDiario />} />
-        </>
-      )}
+          {/* Rutas específicas para choferes */}
+          {userRole === 'chofer' && (
+            <>
+              <Route path="/dashboard-chofer" element={<DashboardChofer />} />
+              <Route path="/informacion-personal" element={<InformacionPersonal />} />
+              <Route path="/vehiculos-asignados" element={<VehiculosAsignados />} />
+              <Route path="/informe-diario" element={<InformeDiario />} />
+            </>
+          )}
 
-      {/* Redirección por defecto, que lleva directamente al dashboard de acuerdo al rol */}
-      <Route path="*" element={userRole === 'administrador' ? <Navigate to="/dashboard" /> : <Navigate to="/dashboard-chofer" />} />
-    </Routes>
+          {/* Redirección por defecto, que lleva directamente al dashboard de acuerdo al rol */}
+          <Route path="*" element={userRole === 'administrador' ? <Navigate to="/dashboard" /> : <Navigate to="/dashboard-chofer" />} />
+        </Routes>
+      </div>
+    </div>
   );
 }
 

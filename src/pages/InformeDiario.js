@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { collection, getDocs, query, where, addDoc } from "firebase/firestore"; // Importar addDoc aquí
+import { collection, getDocs, query, where, addDoc, orderBy, limit } from "firebase/firestore"; // Importar funciones adicionales
 import { Timestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth"; // Importar para la autenticación
 import '../Styles/InformeDiario.css';
@@ -41,6 +41,18 @@ const InformeDiario = () => {
           } else {
             console.warn("No se encontró información de asignación para este usuario.");
           }
+
+          // Obtener el último informe para establecer el kilometraje inicial
+          const informesRef = collection(db, "informes");
+          const informesQuery = query(informesRef, where("rut", "==", userRut), orderBy("fecha", "desc"), limit(1));
+          const lastInformeSnapshot = await getDocs(informesQuery);
+
+          if (!lastInformeSnapshot.empty) {
+            const lastInforme = lastInformeSnapshot.docs[0].data();
+            const lastKilometrajeFinal = lastInforme.kilometrajeFinal;
+            setKilometrajeInicial(lastKilometrajeFinal); // Usamos el kilometrajeFinal del último informe como kilometrajeInicial
+          }
+
         } else {
           console.warn("No hay un usuario autenticado.");
         }
