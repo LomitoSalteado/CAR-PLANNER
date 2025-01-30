@@ -82,7 +82,7 @@
 
 /* Estilo de los botones de eliminar */
 .button-eliminar {
-    background-color: #f44336;
+    background-color: #000000;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -92,7 +92,7 @@
 }
 
 .button-eliminar:hover {
-    background-color: #d32f2f;
+    background-color: #000000;
 }
 
 /* Estilo del botón volver */

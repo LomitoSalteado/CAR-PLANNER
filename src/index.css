@@ -103,3 +103,37 @@ button:hover {
     margin: 0; /* Asegura que no haya margen que empuje el contenedor */
   }
 }
+
+/* 🔹 TÍTULOS GENERALES */
+h1, h2, h3, h4, h5, h6 {
+  margin: 10px 0;
+  font-family: Arial, sans-serif;
+  color: #333; /* Color oscuro para mayor legibilidad */
+  text-align: center; /* Centrado de los títulos */
+}
+
+/* 🔹 TÍTULOS EN LA PÁGINA DE LOGIN */
+.login-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .login-container h1 {
+    font-size: 20px;  /* Ajuste de tamaño de título en pantallas pequeñas */
+  }
+}
+
+/* 🔹 TÍTULOS EN PANTALLAS DE TABLETA */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .login-container h1 {
+    font-size: 22px;  /* Ajuste en pantallas intermedias */
+  }
+}
+
+/* 🔹 TÍTULOS EN PANTALLAS GRANDES (DESKTOP) */
+@media (min-width: 1025px) {
+  .login-container h1 {
+    font-size: 28px;  /* Ajuste en pantallas grandes */
+  }
+}
