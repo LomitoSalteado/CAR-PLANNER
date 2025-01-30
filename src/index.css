@@ -13,8 +13,10 @@ html, body {
   background-color: #f8f9fa;
   display: flex;
   justify-content: center; /* Centrado horizontal */
-  align-items: center;     /* Centrado vertical */
-  margin: 0;               /* Asegura que no haya márgenes */
+  align-items: flex-start; /* Alineación superior para que el contenido no quede oculto */
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Asegura que no haya desbordamiento vertical */
 }
 
 /* 🔹 CONTENEDOR DEL FORMULARIO */
@@ -23,6 +25,7 @@ html, body {
   max-width: 1200px;
   padding: 20px;
   box-sizing: border-box;
+  margin-top: 10px; /* Margen superior para evitar que se corte el contenido */
 }
 
 .login-container {
@@ -34,6 +37,7 @@ html, body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   margin-top: 20px;
+  word-wrap: break-word;
 }
 
 /* 🔹 INPUTS Y BOTONES */
@@ -93,14 +97,14 @@ button:hover {
     padding: 40px;
     display: flex;
     justify-content: center; /* Centrado horizontal */
-    align-items: center;     /* Centrado vertical */
+    align-items: flex-start; /* Centrado vertical, alineado hacia la parte superior */
     height: 100vh;           /* Asegura que ocupe toda la altura de la pantalla */
   }
 
   .login-container {
     max-width: 500px;
     padding: 30px;
-    margin: 0; /* Asegura que no haya margen que empuje el contenedor */
+    margin: 0;
   }
 }
 
@@ -116,6 +120,7 @@ h1, h2, h3, h4, h5, h6 {
 .login-container h1 {
   font-size: 24px;
   margin-bottom: 20px;
+  word-wrap: break-word; /* Asegura que el título se ajuste si es necesario */
 }
 
 @media (max-width: 768px) {
