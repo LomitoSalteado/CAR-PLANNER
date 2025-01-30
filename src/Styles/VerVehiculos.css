@@ -11,10 +11,12 @@
 /* Estilo de los encabezados */
 .ver-vehiculos-container h1 {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .ver-vehiculos-container h2 {
     margin-top: 20px;
+    text-align: center;
 }
 
 /* Estilo del formulario */
@@ -24,6 +26,7 @@
     border-radius: 10px;
     width: 100%;
     max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Estilo de los inputs */
@@ -33,12 +36,13 @@
     width: 100%;
     margin-bottom: 20px;
     border: 1px solid #ddd;
+    box-sizing: border-box;
 }
 
 /* Estilo de los botones */
 .button {
     background-color: #000000;
-    color: rgb(0, 0, 0);
+    color: white;
     padding: 12px 25px;
     border: none;
     border-radius: 15px;
@@ -47,10 +51,11 @@
     width: 100%;
     max-width: 300px;
     transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
 .button:hover {
-    background-color: #000000;
+    background-color: #333333;
 }
 
 /* Estilo de la tabla */
@@ -63,28 +68,31 @@
 .table th, .table td {
     padding: 10px;
     border: 1px solid #ddd;
+    text-align: center;
 }
 
 .table th {
     background-color: #f4f4f4;
+    font-weight: bold;
 }
 
 .table td {
-    text-align: center;
+    font-size: 14px;
 }
 
 /* Estilo de los botones de eliminar */
 .button-eliminar {
-    background-color: #000000;
+    background-color: #f44336;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .button-eliminar:hover {
-    background-color: #000000;
+    background-color: #d32f2f;
 }
 
 /* Estilo del botón volver */
@@ -99,10 +107,46 @@
     width: 100%;
     max-width: 300px;
     margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.button-volver:hover {
+    background-color: #333333;
 }
 
 /* Estilo de los mensajes de error */
 .error-message {
     color: red;
     font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Estilo para la tabla y sus celdas */
+.table th, .table td {
+    text-align: center;
+    padding: 10px;
+}
+
+/* Estilo de los inputs y formularios */
+.input-field {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Estilo para los campos del formulario */
+.form-group label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Mejorar la visibilidad del contenedor de la tabla */
+.table-container {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 900px;
+    overflow-x: auto;
 }

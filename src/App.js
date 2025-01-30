@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -15,15 +16,11 @@ import InformeDiario from "./pages/InformeDiario";
 import DashboardChofer from './pages/DashboardChofer';
 import InformacionPersonal from './pages/InformacionPersonal';
 
-// Importar el Hook de Media Queries
-import { useMediaQuery } from 'react-responsive';
-
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
 
-  // Detectar tamaños de pantalla
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const isTablet = useMediaQuery({ query: '(min-width: 769px) and (max-width: 1024px)' });
 
@@ -49,9 +46,7 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return <p>Cargando...</p>;
-  }
+  if (loading) return <p>Cargando...</p>;
 
   if (!user) {
     return (
@@ -64,7 +59,7 @@ function App() {
   }
 
   return (
-    <div className="container">
+    <div className={`container ${isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop'}`}>
       <Routes>
         {userRole === 'administrador' && (
           <>
@@ -75,7 +70,6 @@ function App() {
             <Route path="/historial-informes" element={<HistorialInformesAdmin />} />
           </>
         )}
-
         {userRole === 'chofer' && (
           <>
             <Route path="/dashboard-chofer" element={<DashboardChofer />} />
@@ -84,7 +78,6 @@ function App() {
             <Route path="/informe-diario" element={<InformeDiario />} />
           </>
         )}
-
         <Route path="*" element={userRole === 'administrador' ? <Navigate to="/dashboard" /> : <Navigate to="/dashboard-chofer" />} />
       </Routes>
     </div>

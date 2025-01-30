@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebaseConfig';  // Importa tu configuración de Firebase
+import { db } from '../firebaseConfig';  // Importa la configuración de Firebase
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';  // Importar useNavigate
+import { useNavigate } from 'react-router-dom';
+import '../Styles/VerVehiculos.css';  // Importar el archivo de estilos
 
 function VerVehiculos() {
   const [vehiculos, setVehiculos] = useState([]);
@@ -9,12 +10,12 @@ function VerVehiculos() {
     marca: '',
     modelo: '',
     patente: '',
-    fechaMantenimiento: '', // Nuevo campo para la fecha de mantenimiento
+    fechaMantenimiento: '',
   });
   const [error, setError] = useState('');
-  const navigate = useNavigate();  // Crear instancia de navigate
+  const navigate = useNavigate();
 
-  // Cargar vehículos de Firebase
+  // Cargar vehículos desde Firebase
   useEffect(() => {
     const fetchVehiculos = async () => {
       try {
@@ -49,10 +50,7 @@ function VerVehiculos() {
       const vehiculoRef = collection(db, 'vehiculos');
       const docRef = await addDoc(vehiculoRef, nuevoVehiculo);
 
-      setVehiculos([
-        ...vehiculos,
-        { id: docRef.id, ...nuevoVehiculo },
-      ]);
+      setVehiculos([...vehiculos, { id: docRef.id, ...nuevoVehiculo }]);
       setNuevoVehiculo({ marca: '', modelo: '', patente: '', fechaMantenimiento: '' });
     } catch (err) {
       setError('Error al agregar el vehículo.');
@@ -71,11 +69,11 @@ function VerVehiculos() {
   };
 
   const handleBack = () => {
-    navigate('/'); // Cambiar la ruta de acuerdo a donde desees redirigir
+    navigate('/'); // Cambiar según la ruta deseada
   };
 
   return (
-    <div className="asignar-chofer-container">
+    <div className="ver-vehiculos-container">
       <h1>Ver Vehículos</h1>
       {error && <p className="error-message">{error}</p>}
 
@@ -134,7 +132,7 @@ function VerVehiculos() {
             <th>Marca</th>
             <th>Modelo</th>
             <th>Patente</th>
-            <th>Fecha de Mantenimiento</th> {/* Nueva columna */}
+            <th>Fecha de Mantenimiento</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -144,7 +142,7 @@ function VerVehiculos() {
               <td>{vehiculo.marca}</td>
               <td>{vehiculo.modelo}</td>
               <td>{vehiculo.patente}</td>
-              <td>{vehiculo.fechaMantenimiento}</td> {/* Mostrar la fecha de mantenimiento */}
+              <td>{vehiculo.fechaMantenimiento}</td>
               <td>
                 <button
                   onClick={() => handleDeleteVehiculo(vehiculo.id)}
@@ -158,9 +156,7 @@ function VerVehiculos() {
         </tbody>
       </table>
 
-      <button onClick={handleBack} className="button-volver">
-        Volver
-      </button>
+      <button onClick={handleBack} className="button-volver">Volver</button>
     </div>
   );
 }

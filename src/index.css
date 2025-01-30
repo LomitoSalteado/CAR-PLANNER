@@ -1,56 +1,105 @@
-/* Estilos generales */
+/* 🔹 REINICIAR MÁRGENES Y EVITAR DESBORDAMIENTO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+  margin: 0;               /* Asegura que no haya márgenes */
+}
+
+/* 🔹 CONTENEDOR DEL FORMULARIO */
 .container {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* Para que el diseño no se altere en grandes pantallas */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* 🔹 INPUTS Y BOTONES */
+input, button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333333;
+}
+
+/* 🔹 ADAPTACIÓN A PANTALLAS PEQUEÑAS */
+@media (max-width: 768px) {
+  .login-container {
+    width: 90%;
+    padding: 15px;
+  }
+
+  input, button {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 10px;
+    width: 100%;
+  }
+}
+
+/* 🔹 ADAPTACIÓN A PANTALLAS DE TABLETA (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .container {
+    padding: 20px;
+  }
+
+  .login-container {
+    width: 80%;
+    padding: 20px;
+  }
+}
+
+/* 🔹 ADAPTACIÓN A PANTALLAS GRANDES (DESKTOP) */
 @media (min-width: 1025px) {
   .container {
-    max-width: 80%;
-  }
-}
-
-/* Pantallas pequeñas (Móviles) */
-@media (max-width: 768px) {
-  .container {
-    max-width: 95%;
-    padding: 5px;
+    padding: 40px;
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;     /* Centrado vertical */
+    height: 100vh;           /* Asegura que ocupe toda la altura de la pantalla */
   }
 
-  .App-header {
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .App-logo {
-    height: 25vmin;
-  }
-
-  .button {
-    width: 100%; /* Botones se expanden sin cambiar el diseño */
-    font-size: 14px;
-  }
-
-  input, select, textarea {
-    width: 100%; /* Formularios ocupan el ancho sin alterar el diseño */
-  }
-}
-
-/* Tablets */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .container {
-    max-width: 90%;
-  }
-
-  .App-header {
-    font-size: 16px;
-  }
-
-  .button {
-    width: 80%;
-    font-size: 16px;
+  .login-container {
+    max-width: 500px;
+    padding: 30px;
+    margin: 0; /* Asegura que no haya margen que empuje el contenedor */
   }
 }
